@@ -1,0 +1,29 @@
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+    outline: 1px solid red;
+}
+
+html,
+body {
+    height: 100%;
+    background-color: $color-primary;
+}
+
+html {
+    font-family: $font-family;
+    color: $color-netrual;
+    font-size: 62.5%;
+}
+
+#root {
+    height: 100%;
+}
+
+body {
+    padding: 1rem 2rem;
+}
