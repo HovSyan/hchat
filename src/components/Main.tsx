@@ -2,7 +2,7 @@ import roomService from "../services/room.service"
 import Room from "./Room";
 import { IRoom } from "../models/room.model";
 import { useFetch } from "../hooks/use-fetch.hook";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const getRooms = () => roomService.getRooms()
 
@@ -17,6 +17,7 @@ export default function Main() {
     console.log('Main rendered', selectedRoom)
     return (
         <main className="main">
+            <menu className="menu"></menu>
             <aside className="rooms">{
                 pending ? 'Loading...' : rooms.map((room) => (
                     <Room room={room}

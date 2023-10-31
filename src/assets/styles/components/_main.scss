@@ -2,9 +2,18 @@
     height: 100%;
 
     display: grid;
-    grid-template-columns: 30rem 1fr 30rem;
+    grid-template-columns: 5.5rem 30rem 1fr 30rem;
+    gap: 1rem;
     
     border-radius: 2rem;
+    border: 1px solid $color-accent-darker;
+
+    .menu {
+        background-color: $color-accent-darker;
+
+        border-top-left-radius: 2rem;
+        border-bottom-left-radius: 2rem;
+    }
 
     .rooms {
         display: flex;
