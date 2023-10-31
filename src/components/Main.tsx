@@ -2,19 +2,30 @@ import roomService from "../services/room.service"
 import Room from "./Room";
 import { IRoom } from "../models/room.model";
 import { useFetch } from "../hooks/use-fetch.hook";
+import { useEffect, useState } from "react";
 
 const getRooms = () => roomService.getRooms()
 
 export default function Main() {
     const [rooms, pending] = useFetch<IRoom[]>(getRooms);
-    
-    console.log('Main rendered')
+    const [selectedRoom, setSelectedRoom] = useState<IRoom['id'] | undefined>();
+
+    function getSelectedRoom(): typeof selectedRoom {
+        return selectedRoom ?? rooms?.[0]?.id;
+    }
+
+    console.log('Main rendered', selectedRoom)
     return (
         <main className="main">
             <aside className="rooms">{
-                pending ? 'Loading...' : rooms.map((room) => <Room room={room} key={room.id} />)
+                pending ? 'Loading...' : rooms.map((room) => (
+                    <Room room={room}
+                          selected={getSelectedRoom() === room.id}
+                          onClick={() => setSelectedRoom(room.id)}
+                          key={room.id} />
+                ))
             }</aside>
-            <section className="chats">Chat</section>
+            <section className="chat">Chat</section>
             <aside className="user-info">User info</aside>
         </main>
     )

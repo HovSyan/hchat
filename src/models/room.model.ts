@@ -1,4 +1,6 @@
 export type IRoom = {
     id: number,
-    name: string
+    name: string,
+    img: any,
+    last_msg: any,
 }

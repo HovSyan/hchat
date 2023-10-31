@@ -5,18 +5,18 @@
     margin: 0;
     padding: 0;
 
-    outline: 1px solid red;
+    // outline: 1px solid red;
 }
 
 html,
 body {
     height: 100%;
-    background-color: $color-primary;
+    background-color: $color-netrual-lighter;
 }
 
 html {
     font-family: $font-family;
-    color: $color-netrual;
+    color: $color-primary;
     font-size: 62.5%;
 }
 
