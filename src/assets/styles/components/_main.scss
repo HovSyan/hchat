@@ -9,7 +9,8 @@
     border: 1px solid $color-accent-darker;
 
     .menu {
-        background-color: $color-accent-darker;
+        background: $color-accent-darker;
+        opacity: .8;
 
         border-top-left-radius: 2rem;
         border-bottom-left-radius: 2rem;
@@ -21,5 +22,16 @@
         gap: 1rem;
 
         padding: 2rem .5rem;
+    }
+
+    .chat {
+        padding: 2rem .5rem;
+
+        display: grid;
+        gap: 1rem;
+        grid-template-rows: max-content;
+        grid-auto-rows: max-content;
+        align-items: baseline;
+        justify-items: baseline;
     }
 }

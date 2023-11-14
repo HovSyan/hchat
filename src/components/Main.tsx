@@ -2,12 +2,12 @@ import roomService from "../services/room.service"
 import Room from "./Room";
 import { IRoom } from "../models/room.model";
 import { useFetch } from "../hooks/use-fetch.hook";
-import { useState } from "react";
-
-const getRooms = () => roomService.getRooms()
+import { useCallback, useState } from "react";
+import Chat from "./Chat";
 
 export default function Main() {
-    const [rooms, pending] = useFetch<IRoom[]>(getRooms);
+    const getRoomsFn = useCallback(() => roomService.getRooms(), [])
+    const [rooms, pending] = useFetch<IRoom[]>(getRoomsFn);
     const [selectedRoom, setSelectedRoom] = useState<IRoom['id'] | undefined>();
 
     function getSelectedRoom(): typeof selectedRoom {
@@ -26,7 +26,9 @@ export default function Main() {
                           key={room.id} />
                 ))
             }</aside>
-            <section className="chat">Chat</section>
+            <section className="chat">
+                <Chat roomId={getSelectedRoom()}/>
+            </section>
             <aside className="user-info">User info</aside>
         </main>
     )
