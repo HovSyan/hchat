@@ -1,5 +1,5 @@
-import { IRoom } from "../models/room.model";
-import { API_CONFIG } from "../configs/api.config";
+import { IRoom } from '../models/room.model';
+import { API_CONFIG } from '../configs/api.config';
 
 class RoomService {
     get rooms(): IRoom[] {
@@ -13,13 +13,34 @@ class RoomService {
         return new Promise((res) => {
             setTimeout(() => {
                 res([
-                    { id: 1, name: 'One', img: 'https://picsum.photos/200/300?sig=1', last_msg: 'Hello World 1'},
-                    { id: 2, name: 'Two', img: 'https://picsum.photos/200/300?sig=2', last_msg: 'Hello World 2'},
-                    { id: 3, name: 'Three', img: 'https://picsum.photos/200/300?sig=3', last_msg: 'Hello World 3'},
-                    { id: 4, name: 'Four', img: 'https://picsum.photos/200/300?sig=4', last_msg: 'Some really long text that will be overflowing 100%'},
+                    {
+                        id: 1,
+                        name: 'One',
+                        img: 'https://picsum.photos/200/300?sig=1',
+                        last_msg: 'Hello World 1',
+                    },
+                    {
+                        id: 2,
+                        name: 'Two',
+                        img: 'https://picsum.photos/200/300?sig=2',
+                        last_msg: 'Hello World 2',
+                    },
+                    {
+                        id: 3,
+                        name: 'Three',
+                        img: 'https://picsum.photos/200/300?sig=3',
+                        last_msg: 'Hello World 3',
+                    },
+                    {
+                        id: 4,
+                        name: 'Four',
+                        img: 'https://picsum.photos/200/300?sig=4',
+                        last_msg:
+                            'Some really long text that will be overflowing 100%',
+                    },
                 ]);
-            }, 200)
-        })
+            }, 200);
+        });
         // return Promise.resolve([
         //     { id: 1, name: 'One '},
         //     { id: 2, name: 'Two '},
@@ -31,4 +52,3 @@ class RoomService {
 
 const roomService = new RoomService();
 export default roomService;
-
