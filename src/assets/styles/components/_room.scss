@@ -5,10 +5,11 @@
     grid-gap: 1rem;
     grid-row-gap: .6rem;
 
-    background-color: $color-netrual-light;
-    border: 1px solid $color-netrual;
+    background-color: $color-netrual-dark;
+    border: 1px solid transparent;
     border-radius: .3rem;
     padding: .5rem 1rem;
+    color: #fff;
 
     cursor: pointer;
     transition: all .2s;
@@ -38,7 +39,7 @@
     }
 
     &__img-alt {
-        background-color: $color-netrual-lighter;
+        background-color: $color-netrual;
         width: 100%;
         aspect-ratio: 1;
         border-radius: 100%;
@@ -55,12 +56,10 @@
         align-self: end;
         font-size: 1.6rem;
         font-weight: 500;
-        color: $color-primary;
     }
 
     &__last-msg {
         align-self: start;
-        color: $color-primary-lighter;
         text-overflow: ellipsis;
         overflow: hidden;
         text-wrap: nowrap;
