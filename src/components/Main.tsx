@@ -30,7 +30,9 @@ export default function Main() {
                             key={room.id}
                         />
                     ))}
-                <button className="rooms__add-new">+</button>
+                <button className="rooms__add-new">
+                    <span>+</span> Add New Room
+                </button>
             </aside>
             <section className="chat">
                 <Chat roomId={getSelectedRoom()} />

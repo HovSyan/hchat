@@ -7,6 +7,7 @@
 
     background-color: $color-netrual-dark;
     border: 1px solid transparent;
+    outline: 2px solid transparent;
     border-radius: .3rem;
     padding: .5rem 1rem;
     color: #fff;
@@ -15,12 +16,13 @@
     transition: all .2s;
 
     &--selected {
-        border-color: $color-accent;
+        border-color: $color-accent-light;
+        outline-color: $color-accent-light;
         transform: translateX(.5rem);
     }
 
     &:not(&--selected):hover {
-        border-color: $color-accent-lighter;
+        border-color: $color-accent;
         transform: translateX(.2rem);
     }
 
