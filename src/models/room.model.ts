@@ -4,3 +4,5 @@ export type IRoom = {
     img: string;
     last_msg: string;
 };
+
+export type ICreationRoom = Omit<IRoom, 'id'>;

@@ -1,3 +1,3 @@
 export const API_CONFIG = {
-    url: 'http://localhost:3006',
+    url: 'http://localhost:3100',
 };
