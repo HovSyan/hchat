@@ -11,7 +11,6 @@ export type RoomProps = {
 export default function Room({ room, selected, onClick }: RoomProps) {
     const [imageLoaded, setImageLoaded] = useState(false);
 
-    console.log('Room rendered');
     return (
         <div
             className={`room ${selected ? 'room--selected' : ''}`}

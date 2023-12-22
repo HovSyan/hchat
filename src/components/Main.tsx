@@ -1,20 +1,17 @@
-import { IRoom } from '../models/room.model';
-
-import { useState } from 'react';
 import MenuPanel from './MenuPanel';
 import RoomsPanel from './RoomsPanel';
 import ChatPanel from './ChatPanel';
 import UserPanel from './UserPanel';
+import Context__SelectedRoom from '../contexts/SelectedRoomContext';
 
 export default function Main() {
-    const [selectedRoom, setSelectedRoom] = useState<IRoom['id'] | undefined>();
-
-    console.log('Main rendered', selectedRoom);
     return (
         <main className="main">
             <MenuPanel />
-            <RoomsPanel selected={selectedRoom} onRoomSelect={(roomId) => setSelectedRoom(roomId)}/>
-            <ChatPanel roomId={selectedRoom}/>
+            <Context__SelectedRoom>
+                <RoomsPanel />
+                <ChatPanel />
+            </Context__SelectedRoom>
             <UserPanel />
         </main>
     );

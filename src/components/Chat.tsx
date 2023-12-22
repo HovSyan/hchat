@@ -9,7 +9,6 @@ export type ChatProps = {
 };
 
 export default function Chat({ roomId }: ChatProps) {
-    console.log('Chat rendered');
     const [messages, setMessages] = useState<IMessage[] | undefined>(undefined);
 
     useEffect(() => {

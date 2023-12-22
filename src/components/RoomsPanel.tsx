@@ -1,23 +1,19 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useFetch } from '../hooks/use-fetch.hook';
 import { IRoom } from '../models/room.model';
 import roomService from '../services/room.service';
 import Room from './Room';
+import { SelectedRoomContext } from '../contexts/SelectedRoomContext';
 
-export type RoomsPanelProps = {
-    selected?: IRoom['id']
-
-    onRoomSelect: (roomId: IRoom['id']) => void;
-}
-
-export default function RoomsPanel({ selected, onRoomSelect }: RoomsPanelProps) {
+export default function RoomsPanel() {
+    const { room: seletedRoom, setRoom: setSelectedRoom } = useContext(SelectedRoomContext);
     const [rooms, pending] = useFetch<IRoom[]>(roomService.getRooms);
 
     useEffect(() => {
-        if(selected == undefined && rooms?.length) {
-            onRoomSelect(rooms[0].id);       
+        if(seletedRoom == undefined && rooms?.length) {
+            setSelectedRoom(rooms[0].id);       
         }
-    }, [selected, rooms]);
+    }, [seletedRoom, rooms]);
 
     return (
         <aside className="rooms-panel">
@@ -26,8 +22,8 @@ export default function RoomsPanel({ selected, onRoomSelect }: RoomsPanelProps) 
                 : rooms.map((room) => (
                     <Room
                         room={room}
-                        selected={selected === room.id}
-                        onClick={() => onRoomSelect(room.id)}
+                        selected={seletedRoom === room.id}
+                        onClick={() => setSelectedRoom(room.id)}
                         key={room.id}
                     />
                 ))}
