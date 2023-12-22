@@ -20,8 +20,8 @@ export default function Chat({ roomId }: ChatProps) {
         messagesService.getMessages(roomId).then((m) => setMessages(m));
     }, [roomId]);
 
-    if (!roomId) {
-        return <h1>Loading...</h1>;
+    if(!roomId) {
+        return <h1>Hey champion! Select a room to view the chat!</h1>;
     }
 
     if (!messages || messages.length === 0) {

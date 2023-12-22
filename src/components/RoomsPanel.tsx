@@ -1,9 +1,8 @@
+import { useEffect } from 'react';
 import { useFetch } from '../hooks/use-fetch.hook';
 import { IRoom } from '../models/room.model';
 import roomService from '../services/room.service';
 import Room from './Room';
-
-const getRoomsFn = roomService.getRooms.bind(roomService);
 
 export type RoomsPanelProps = {
     selected?: IRoom['id']
@@ -12,7 +11,13 @@ export type RoomsPanelProps = {
 }
 
 export default function RoomsPanel({ selected, onRoomSelect }: RoomsPanelProps) {
-    const [rooms, pending] = useFetch<IRoom[]>(getRoomsFn);
+    const [rooms, pending] = useFetch<IRoom[]>(roomService.getRooms);
+
+    useEffect(() => {
+        if(selected == undefined && rooms?.length) {
+            onRoomSelect(rooms[0].id);       
+        }
+    }, [selected, rooms]);
 
     return (
         <aside className="rooms-panel">
@@ -27,7 +32,7 @@ export default function RoomsPanel({ selected, onRoomSelect }: RoomsPanelProps) 
                     />
                 ))}
             <button className="rooms-panel__add-new">
-                <span>+</span> Add New Room
+                <span>+</span> New Room
             </button>
         </aside>
     );

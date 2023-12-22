@@ -11,14 +11,13 @@ class RoomService {
     private _getAllUrl = API_CONFIG.url + '/rooms';
     private _createRoomUrl = API_CONFIG.url + '/room';
 
-    getRooms(): Promise<IRoom[]> {
+    getRooms = (): Promise<IRoom[]> => {
         return axios.get<IRoom[]>(this._getAllUrl).then((response) => this._rooms = response.data);
-    }
+    };
 
-    createRoom(room: ICreationRoom): Promise<IRoom> {
+    createRoom = (room: ICreationRoom): Promise<IRoom> => {
         return axios.post<IRoom>(this._createRoomUrl, room).then((response) => response.data);
-    }
+    };
 }
 
-const roomService = new RoomService();
-export default roomService;
+export default new RoomService();

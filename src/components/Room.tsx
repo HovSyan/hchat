@@ -30,7 +30,7 @@ export default function Room({ room, selected, onClick }: RoomProps) {
             </div>
             <div className="room__name">{room.name}</div>
             <div className="room__last-msg" title={room.last_msg}>
-                {room.last_msg}
+                {room.last_msg || <i className='room__no-last-msg'>{'<No Messages Yet!>'}</i>}
             </div>
         </div>
     );
