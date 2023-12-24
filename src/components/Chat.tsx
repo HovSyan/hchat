@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import { IRoom } from '../models/room.model';
 import { IMessage } from '../models/message.model';
 import messagesService from '../services/messages.service';
@@ -10,6 +10,10 @@ export type ChatProps = {
 
 export default function Chat({ roomId }: ChatProps) {
     const [messages, setMessages] = useState<IMessage[] | undefined>(undefined);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const messageComponents = messages?.length
+        ? messages?.map((m) => <Message msg={m} key={m.id} /> ) 
+        : <h1 className='chat__no-messages'>No Messages Yet!</h1>;
 
     useEffect(() => {
         if (!roomId) {
@@ -19,19 +23,30 @@ export default function Chat({ roomId }: ChatProps) {
         messagesService.getMessages(roomId).then((m) => setMessages(m));
     }, [roomId]);
 
+    const onMessageSubmit = (event: FormEvent) => {
+        event.preventDefault();
+        const msg = inputRef.current?.value;
+        if(!roomId || !msg?.trim() || !inputRef.current) return;
+
+        messagesService.sendMessage(roomId, msg);
+        inputRef.current.value = '';
+    };
+
     if(!roomId) {
         return <h1>Hey champion! Select a room to view the chat!</h1>;
     }
 
-    if (!messages || messages.length === 0) {
-        return <h1>No messages yet!</h1>;
-    }
-
     return (
         <>
-            {messages.map((m) => (
-                <Message msg={m} key={m.id} />
-            ))}
+            <div className='chat__messages'>
+                {messageComponents}
+            </div>
+            <div className='chat__input'>
+                <form onSubmit={onMessageSubmit}>
+                    <input ref={inputRef} type='text' />
+                    <button className='chat__input-send'></button>
+                </form>
+            </div>
         </>
     );
 }

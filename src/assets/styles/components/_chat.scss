@@ -1,0 +1,50 @@
+.chat {
+    &__messages {
+        display: grid;
+        gap: 1rem;
+        grid-template-rows: max-content;
+        grid-auto-rows: max-content;
+        align-items: baseline;
+        justify-items: baseline;
+    }
+
+    &__no-messages {
+        margin: auto;
+    }
+
+    &__input {
+        position: absolute;
+        bottom: 2rem;
+        width: 100%;
+        max-width: 50rem;
+        left: 50%;
+        transform: translateX(-50%);
+
+        min-height: 4rem;
+        
+        input {
+            position: absolute;
+            width: 100%;
+            border: none;
+            background-color: $color-primary;
+            height: 100%;
+            border-radius: 3rem;
+            padding: 0 3rem;
+            color: $color-accent-light;
+            font-size: 1.7rem;
+        }
+
+        input:focus {
+            border: none;
+            color: $color-accent-light;
+            outline: 1px solid $color-accent-light;
+        }
+    }
+
+    &__input-send {
+        position: absolute;
+        right: 1.5rem;
+        height: 100%;
+        width: 3rem;
+    }
+}

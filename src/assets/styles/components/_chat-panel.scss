@@ -1,10 +1,4 @@
 .chat-panel {
+    position: relative;
     padding: 2rem .5rem;
-
-    display: grid;
-    gap: 1rem;
-    grid-template-rows: max-content;
-    grid-auto-rows: max-content;
-    align-items: baseline;
-    justify-items: baseline;
 }
