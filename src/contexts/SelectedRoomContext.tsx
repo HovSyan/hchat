@@ -8,7 +8,7 @@ export type ISelectedRoomContext = {
 
 export const SelectedRoomContext = createContext<ISelectedRoomContext>({} as ISelectedRoomContext);
 
-export default function Context__SelectedRoom({ children }: { children: ReactNode }) {
+export default function SelectedRoomContextWrapper({ children }: { children: ReactNode }) {
     const [room, setRoom] = useState<IRoom['id'] | undefined>();
     return <SelectedRoomContext.Provider value={ {room, setRoom} }>
         {children}

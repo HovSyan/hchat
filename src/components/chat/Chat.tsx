@@ -5,21 +5,22 @@ import messagesService from '../../services/messages.service';
 import Message from '../message/Message';
 
 import './Chat.scss';
+import Icon from '../icon/Icon';
 
 export type ChatProps = {
     roomId: IRoom['id'] | undefined;
 };
 
 export default function Chat({ roomId }: ChatProps) {
-    const [messages, setMessages] = useState<IMessage[] | undefined>(undefined);
+    const [messages, setMessages] = useState<IMessage[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
-    const messageComponents = messages?.length
+    const messageComponents = messages.length
         ? messages?.map((m) => <Message msg={m} key={m.id} /> ) 
         : <h1 className='chat__no-messages'>No Messages Yet!</h1>;
 
     useEffect(() => {
         if (!roomId) {
-            setMessages(undefined);
+            setMessages([]);
             return;
         }
         messagesService.getMessages(roomId).then((m) => setMessages(m));
@@ -45,8 +46,11 @@ export default function Chat({ roomId }: ChatProps) {
             </div>
             <div className='chat__input'>
                 <form onSubmit={onMessageSubmit}>
-                    <input ref={inputRef} type='text' />
-                    <button className='chat__input-send'></button>
+                    <input spellCheck="false" ref={inputRef} type='text' />
+                    <span className='chat__input-animation'></span>
+                    <button className='chat__input-send'>
+                        <Icon name='send'/>
+                    </button>
                 </form>
             </div>
         </>
