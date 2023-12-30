@@ -19,7 +19,7 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "lint": "npx eslint --fix --ext .ts,.tsx src/",
-    "generate:svg-sprite": "npx svg-sprite --svg src/assets/icons/*.svg --dest=out"
+    "generate:svg-sprite": "npx svg-sprite -s src/assets/icons/*.svg --symbol-dest=src/assets --symbol-sprite=sprite.svg"
   },
   "eslintConfig": {
     "extends": [

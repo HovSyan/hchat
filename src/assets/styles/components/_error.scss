@@ -1,0 +1,28 @@
+.error {
+    position: fixed;
+    z-index: 1000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 1.6rem;
+    box-shadow: 100px 100px 0 100vh rgba(#000, .7);
+    border-radius: 4px;
+
+    display: grid;
+    grid-gap: 1rem;
+    padding: 2rem 3rem;
+
+    &__icon {
+        color: $color-danger;
+    }
+
+    &__heading {
+        font-size: 1.6rem;
+        font-weight: 600;
+    }
+
+    &__text {
+        font-size: 1.4rem;
+    }
+}

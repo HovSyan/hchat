@@ -33,7 +33,7 @@ export default function Chat({ roomId }: ChatProps) {
     };
 
     if(!roomId) {
-        return <h1>Hey champion! Select a room to view the chat!</h1>;
+        return <h1 className='chat__no-messages'>Hey champion! Select a room to view the chat!</h1>;
     }
 
     return (
