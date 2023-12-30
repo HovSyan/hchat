@@ -1,5 +1,7 @@
-import { IMessage } from '../models/message.model';
-import UserProfileImage from './UserProfileImage';
+import { IMessage } from '../../models/message.model';
+import UserProfileImage from '../user-profile-image/UserProfileImage';
+
+import './Message.scss';
 
 export type MessageProps = {
     msg: IMessage;

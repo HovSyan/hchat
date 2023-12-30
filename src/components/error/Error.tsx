@@ -1,4 +1,6 @@
-import Icon from './Icon';
+import Icon from '../icon/Icon';
+
+import './Error.scss';
 
 export default function Error() {
     return (

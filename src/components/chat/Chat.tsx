@@ -1,8 +1,10 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
-import { IRoom } from '../models/room.model';
-import { IMessage } from '../models/message.model';
-import messagesService from '../services/messages.service';
-import Message from './Message';
+import { IRoom } from '../../models/room.model';
+import { IMessage } from '../../models/message.model';
+import messagesService from '../../services/messages.service';
+import Message from '../message/Message';
+
+import './Chat.scss';
 
 export type ChatProps = {
     roomId: IRoom['id'] | undefined;

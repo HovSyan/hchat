@@ -1,5 +1,7 @@
 import { MouseEventHandler, useState } from 'react';
-import { IRoom } from '../models/room.model';
+import { IRoom } from '../../models/room.model';
+
+import './Room.scss';
 
 export type RoomProps = {
     room: IRoom;
