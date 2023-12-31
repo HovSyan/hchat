@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import Chat from '../chat/Chat';
-import { SelectedRoomContext } from '../../contexts/SelectedRoomContext';
+import SelectedRoomContext from '../../contexts/SelectedRoomContext';
 
 import './ChatPanel.scss';
 

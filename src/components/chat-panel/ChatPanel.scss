@@ -1,4 +1,5 @@
 .chat-panel {
     position: relative;
+    isolation: isolate;
     padding: 2rem .5rem;
 }

@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction, createContext, useState } from 'react';
+import { Dispatch, SetStateAction, createContext } from 'react';
 import { IRoom } from '../models/room.model';
 
 export type ISelectedRoomContext = {
@@ -6,11 +6,4 @@ export type ISelectedRoomContext = {
     setRoom: Dispatch<SetStateAction<IRoom['id'] | undefined>>
 }
 
-export const SelectedRoomContext = createContext<ISelectedRoomContext>({} as ISelectedRoomContext);
-
-export default function SelectedRoomContextWrapper({ children }: { children: ReactNode }) {
-    const [room, setRoom] = useState<IRoom['id'] | undefined>();
-    return <SelectedRoomContext.Provider value={ {room, setRoom} }>
-        {children}
-    </SelectedRoomContext.Provider>;
-}
+export default createContext<ISelectedRoomContext>({} as ISelectedRoomContext);

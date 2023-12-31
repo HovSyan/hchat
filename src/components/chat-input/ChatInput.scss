@@ -1,0 +1,74 @@
+
+@import 'src/assets/styles/variables';
+
+.chat-input {
+    --focus-color: #{$color-accent-light};
+
+    position: absolute;
+    inset: auto 0 2rem;
+    margin: auto;
+    
+    width: 100%;
+    max-width: 50rem;
+    min-height: 3.5rem;
+
+    display: grid;
+    grid-template-columns: 1fr 4rem;
+    grid-gap: 1rem;
+    
+    background: $color-primary;
+    border-radius: 2rem;
+
+    &__input {
+        position: relative;
+
+        display: block;
+        max-height: 10rem;
+        overflow: scroll;
+        outline: none;
+        border: none;
+        color: var(--focus-color);
+        padding: 1rem 5rem 1rem 2rem;
+        font-size: 1.4rem;
+
+        &:focus {
+            & ~ .chat-input__animation { transform: scale(1) ;}
+            & ~ .chat-input__send { color: var(--focus-color);}
+        }
+    }
+
+    &__animation {
+        position: absolute;
+        display: block;
+        inset: 0;
+        z-index: -1;
+        outline: 1px solid var(--focus-color);
+        border-radius: 2rem;
+    
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: transform .2s;
+    }
+
+    &__send {
+        position: relative;
+
+        background: transparent;
+        outline: none;
+        border: none;
+        height: 100%;
+        width: 3rem;
+        cursor: pointer;
+        
+        color: $color-accent;
+        transition: color .2s;
+    
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    
+        &:hover {
+            color: var(--focus-color);
+        }
+    }
+}

@@ -3,7 +3,7 @@ import { useFetch } from '../../hooks/use-fetch.hook';
 import { IRoom } from '../../models/room.model';
 import roomService from '../../services/room.service';
 import Room from '../room/Room';
-import { SelectedRoomContext } from '../../contexts/SelectedRoomContext';
+import SelectedRoomContext from '../../contexts/SelectedRoomContext';
 import Error from '../error/Error';
 
 import './RoomsPanel.scss';
