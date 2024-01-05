@@ -3,15 +3,13 @@ import RoomsPanel from '../rooms-panel/RoomsPanel';
 import ChatPanel from '../chat-panel/ChatPanel';
 import UserPanel from '../user-panel/UserPanel';
 import RoomContext, { ISelectedRoomContext } from '../../contexts/SelectedRoomContext';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { IRoom } from '../../models/room.model';
 
 import './Main.scss';
 
 export default function Main() {
     const [selectedRoom, setSelectedRoom] = useState<IRoom['id']>();
-    const menuPanel = useMemo(() => <MenuPanel />, []);
-    const userPanel = useMemo(() => <UserPanel />, []);
     const selectedRoomContext: ISelectedRoomContext = {
         room: selectedRoom,
         setRoom: setSelectedRoom,
@@ -19,12 +17,12 @@ export default function Main() {
 
     return (
         <main className="main">
-            {menuPanel}
             <RoomContext.Provider value={selectedRoomContext}>
+                <MenuPanel />
                 <RoomsPanel />
                 <ChatPanel />
+                <UserPanel />
             </RoomContext.Provider>
-            {userPanel}
         </main>
     );
 }

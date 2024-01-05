@@ -17,6 +17,7 @@ export default function Chat({ roomId }: ChatProps) {
         ? messages?.map((m) => <Message msg={m} key={m.id} /> ) 
         : <h1 className='chat__no-messages'>No Messages Yet!</h1>;
 
+    // TODO: move to custom hook
     useEffect(() => {
         if (!roomId) {
             setMessages([]);

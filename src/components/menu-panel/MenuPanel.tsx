@@ -1,5 +1,8 @@
+import { memo } from 'react';
 import './MenuPanel.scss';
 
-export default function MenuPanel() {
+function MenuPanel() {
     return <menu className="menu-panel"></menu>;
 }
+
+export default memo(MenuPanel);
