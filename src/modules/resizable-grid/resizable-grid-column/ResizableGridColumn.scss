@@ -1,0 +1,52 @@
+@import "src/assets/styles/variables";
+
+.resizable-grid-column {
+    display: flex;
+    gap: 2rem;
+
+    &__content{
+        flex-grow: 1;
+    }
+
+    &__separator {
+        margin: 2rem 0;
+        width: 11px;
+        border-radius: 50%;
+
+        position: relative;
+        
+        opacity: .7;
+        transition: opacity .2s;
+
+        cursor: col-resize;
+
+        &::after {
+            content: '';
+
+            position: absolute;
+            top: 0;
+            left: 5px;
+            width: 1px;
+            height: 100%;
+            background: linear-gradient(transparent, $color-primary 30%, $color-primary 70%, transparent);
+        }
+
+        &::before {
+            display: block;
+            content: '';
+            height: 3rem;
+            
+            position: absolute;
+            inset: 50% 0 0 0;
+            transform: translateY(-50%);
+
+            border-left: 1px solid $color-primary;
+            border-right: 1px solid $color-primary;
+            cursor: inherit;
+        }
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}

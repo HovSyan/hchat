@@ -1,0 +1,13 @@
+.resizable-grid {
+    height: 100%;
+    display: grid;
+
+    &--resizing {
+        cursor: col-resize;
+
+        .resizable-grid-column__content > * {
+            pointer-events: none;
+            user-select: none;
+        }
+    }
+}

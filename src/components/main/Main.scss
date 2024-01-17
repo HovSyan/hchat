@@ -1,12 +1,8 @@
 @import 'src/assets/styles/variables';
 
 .main {
-    height: 100%;
+    min-height: 100%;
 
-    display: grid;
-    grid-template-columns: 5.5rem 30rem 1fr 30rem;
-    gap: 1rem;
-    
     border-radius: 2rem;
     border: 1px solid $color-accent;
 }
