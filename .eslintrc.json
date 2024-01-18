@@ -36,5 +36,10 @@
             "always"
         ],
         "no-multiple-empty-lines": [2, {"max": 1, "maxEOF": 0}]
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     }
 }

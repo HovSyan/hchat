@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IRoom } from '../../models/room.model';
 import { IMessage } from '../../models/message.model';
 import messagesService from '../../services/messages.service';
