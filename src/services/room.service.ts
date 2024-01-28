@@ -3,6 +3,8 @@ import { API_CONFIG } from '../configs/api.config';
 import axios from 'axios';
 
 class RoomService {
+    selectedRoom: IRoom['id'] | undefined;
+
     get rooms(): IRoom[] {
         return this._rooms;
     }

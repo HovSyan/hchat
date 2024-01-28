@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useFetch } from '../../hooks/use-fetch.hook';
 import { IRoom } from '../../models/room.model';
 import roomService from '../../services/room.service';
@@ -12,10 +12,11 @@ export default function RoomsPanel() {
     const { room: seletedRoom, setRoom: setSelectedRoom } = useContext(SelectedRoomContext);
     const [rooms, pending, error] = useFetch<IRoom[]>(roomService.getRooms);
 
-    if(seletedRoom == undefined && rooms?.length) {
-        setSelectedRoom(rooms[0].id);   
-        return <></>;
-    }
+    useEffect(() => {
+        if(seletedRoom == undefined && rooms?.length) {
+            setSelectedRoom(rooms[0].id);       
+        }
+    }, [seletedRoom, rooms]);
 
     let panelData: JSX.Element;
     if (error) {

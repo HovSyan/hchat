@@ -1,0 +1,41 @@
+@import '../../assets/styles/variables';
+
+.login {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $color-primary;
+    border-radius: $border-radius-normal;
+
+    padding: 1rem 13rem;
+    text-align: center;
+    display: grid;
+    justify-items: center;
+    gap: 2rem;
+    color: $color-netrual-lighter;
+
+    &__title {
+        display: grid;
+        gap: .5rem;
+        grid-column: 1 / -1;
+        font-size: 2rem;
+
+        &--sub {
+            font-size: 1.4rem;
+        }
+    }
+
+    &__submit-btn {
+        border: none;
+        outline: none;
+        background-color: $color-accent;
+        padding: 1rem 2rem;
+        border-radius: $border-radius-normal;
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba($color-accent-light, .7);
+        }
+    }
+}

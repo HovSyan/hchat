@@ -9,7 +9,7 @@
     text-align: center;
     font-size: 1.6rem;
     box-shadow: 100px 100px 0 100vh rgba(#000, .7);
-    border-radius: 6px;
+    border-radius: $border-radius-normal;
 
     display: grid;
     grid-gap: 1rem;

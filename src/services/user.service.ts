@@ -1,4 +1,7 @@
+import axios from 'axios';
+import { LOCAL_STORAGE_KEYS } from '../configs/localStorage.config';
 import { IUser } from '../models/user.model';
+import { API_CONFIG } from '../configs/api.config';
 
 const MOCK_USERS: IUser[] = [
     { id: 1, nickname: 'Dexter' },
@@ -8,10 +11,30 @@ const MOCK_USERS: IUser[] = [
 ];
 
 class UserService {
+    private _currentUser: IUser | undefined;
+
+    private _validateNicknameUrl = API_CONFIG.url + '/user/validateNickname';
+    
+    set currentUser(u: IUser | undefined) {
+        this._currentUser = u;
+        u && localStorage.setItem(LOCAL_STORAGE_KEYS.user, u.toString());
+    }
+
+    get currentUser(): IUser | undefined {
+        return this._currentUser;
+    }
+
     getUser(id: IUser['id']): Promise<IUser | undefined> {
         return Promise.resolve(MOCK_USERS.find((u) => u.id === id));
     }
+
+    validateNickname(nickname: string): Promise<boolean> {
+        return axios.get(this._validateNicknameUrl, { params: { nickname }}).then((res) => res.data);
+    }
+
+    newUser(user: Omit<IUser, 'id'>): Promise<IUser> {
+        return Promise.resolve(MOCK_USERS[0]);
+    }
 }
 
-const userService = new UserService();
-export default userService;
+export default new UserService();

@@ -1,0 +1,43 @@
+@import "../../assets/styles/variables";
+
+.notification {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    position: fixed;
+    bottom: 1.8rem;
+    right: 1.8rem;
+
+    background-color: $color-accent-light;
+    border-radius: $border-radius-normal;
+    padding: 1rem 2rem 1rem 1.5rem;
+
+    font-size: 1.6rem;
+
+    min-width: 20rem;
+
+    transform: translateX(200%);
+    opacity: 0;
+
+    animation: fadeInRight .5s forwards;
+
+    &--error {
+        color: $color-danger;
+    }
+
+    &--fade-out {
+        animation: fadeInRight .5s forwards, fadeOut 1s forwards;
+    }
+}
+
+@keyframes fadeInRight {
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    to { opacity: 0;}
+}

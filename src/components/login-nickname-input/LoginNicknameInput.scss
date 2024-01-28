@@ -1,0 +1,23 @@
+@import "../../assets/styles/variables";
+
+.login-nickname-input {
+    border-bottom: 1px double rgba($color-netrual-lighter, .4);
+    padding-bottom: 2px;
+    padding-inline: 2px;
+    min-width: 13ch;
+    outline: none;
+
+    font-size: 1.6rem;
+
+    transition: all .2s;
+
+    &:focus, &:active, &:not(:empty) {
+        border-bottom-color: $color-netrual-lighter;
+    }
+
+    &:not(:focus):empty:after {
+        pointer-events: none;
+        content: 'Your nickname';
+        opacity: .4;
+    }
+}
