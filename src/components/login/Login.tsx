@@ -1,64 +1,101 @@
-import { FormEvent, useRef, useState } from 'react';
-import LoginImage, { LoginImageRef } from '../login-image/LoginImage';
-import LoginNicknameInput, { LoginNicknameInputRef } from '../login-nickname-input/LoginNicknameInput';
+import LoginImage from '../login-image/LoginImage';
+import LoginNicknameInput from '../login-nickname-input/LoginNicknameInput';
+import { Controller, FormState, SubmitHandler, useForm } from 'react-hook-form';
 import Notification from '../notification/Notification';
 
-import userService from '../../services/user.service';
-
 import './Login.scss';
+import userService from '../../services/user.service';
+import { useMemo } from 'react';
+import uuidService from '../../services/uuid.service';
+import avatarService from '../../services/avatar.service';
+import { useNavigate } from 'react-router-dom';
+import { LOCAL_STORAGE_KEYS } from '../../configs/localStorage.config';
+
+type LoginForm = {
+    nickname: string,
+    profile_img: string,
+}
 
 export default function Login() {
-    const imgRef = useRef<LoginImageRef>(null);
-    const nicknameRef = useRef<LoginNicknameInputRef>(null);
-    const [errors, setErrors] = useState<string[] | undefined>();
-
-    const onSubmit = (e: FormEvent) => {
-        e.preventDefault();
-
-        validateForm(nicknameRef.current?.nickname || '').then((result) => {
-            if (result === null) {
-                // Create user
-            } else {
-                setErrors([result]);
-            }
-        });
+    const navigate = useNavigate();
+    const { control, handleSubmit, formState } = useForm<LoginForm>({
+        defaultValues: {
+            nickname: '',
+            profile_img: useMemo(() => `https://robohash.org/${uuidService.id()}`, [])
+        },
+        resetOptions: {
+            keepErrors: true
+        },
+        mode: 'all'
+    });
+    
+    const onSubmit: SubmitHandler<LoginForm> = async ({ nickname, profile_img }) => { 
+        const file = await avatarService.fileFromSrc(profile_img);
+        const user = await userService.newUser(nickname, file);
+        localStorage.setItem(LOCAL_STORAGE_KEYS.user, user.id.toString());
+        navigate('/');
     };
 
     return <>
         <form 
             className="login"
-            onSubmit={onSubmit}
+            onSubmit={handleSubmit(onSubmit)}
         >
             <h1 className="login__title">
                 Hey champion! <span className="login__title--sub">Fill up your profile so others can recognize you!</span>
             </h1>
-            <LoginImage ref={imgRef}/>
-            <LoginNicknameInput ref={nicknameRef}/>
-            <button className='login__submit-btn'>Save</button>
-        </form>
-        {errors?.map((e) => (
-            <Notification 
-                key={Math.random()}
-                type='error' 
-                message={e}
+
+            <Controller
+                name='profile_img'
+                control={control}
+                render={({ field }) => (<LoginImage onChange={field.onChange} value={field.value} />)}
             />
-        ))}
+            <Controller 
+                name='nickname'
+                control={control}
+                render={({ field }) => (<LoginNicknameInput onChange={field.onChange} />)}
+                rules={{
+                    required: 'You should have a nickname, mate 😊',
+                    validate: nicknameValidator('Someone got this nickname 😔')
+                }}   
+            />
+            
+            <button type='submit' className={submitBtnClassName('login__submit-btn', formState)}>
+                Save
+            </button>
+        </form>
+        {formState.errors.nickname?.message && <Notification type='error' message={formState.errors.nickname.message}/>}
     </>;
 }
 
-const enum VALIDATION_ERRORS {
-    EMPTY_NICKNAME = 'You should have a nickname, mate 😊',
-    DUPLICATE_NICKNAME = 'Someone got this nickname 😔',
+function nicknameValidator(errorMsg: string) {
+    const time = 200;
+    let timeout: ReturnType<typeof setTimeout>; 
+
+    return async (nickname: string) => {
+        return new Promise<string | undefined>((res) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(async () => {
+                const exists = await userService.nicknameExists(nickname);
+                console.log(exists);
+                res(exists ? errorMsg : undefined);
+            }, time);
+        });
+    };
 }
 
-async function validateForm(nickname: string): Promise<null | VALIDATION_ERRORS> {
-    if (nickname === '') {
-        return VALIDATION_ERRORS.EMPTY_NICKNAME;
+function submitBtnClassName(prefix: string, formState: FormState<LoginForm>) {
+    if (formState.isValidating) {
+        return `${prefix} ${prefix}--loading`;
     }
 
-    if (await userService.validateNickname(nickname)) {
-        return VALIDATION_ERRORS.DUPLICATE_NICKNAME;
+    if (Object.keys(formState.errors).length && !formState.isValid) {
+        return `${prefix} ${prefix}--invalid`;
     }
 
-    return null;
+    if (!Object.keys(formState.errors).length && formState.isValid) {
+        return `${prefix} ${prefix}--valid`;
+    }
+
+    return prefix;
 }

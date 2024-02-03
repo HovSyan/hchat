@@ -1,53 +1,32 @@
-import { ChangeEvent, Ref, forwardRef, useEffect, useId, useImperativeHandle, useState } from 'react';
-import uuidService from '../../services/uuid.service';
+import { useId, useMemo, useState } from 'react';
 import img from '../../assets/images/blank-profile-picture.webp';
 
 import './LoginImage.scss';
 
-const AVATAR_TEXT = {
-    mouseOver: 'Upload!',
-    mouseOut: 'This is your avatar'
-} as const;
-
-export type LoginImageRef = {
-    src: string | null
+export type LoginImageProps = {
+    onChange: (src: string) => void;
+    value: string;
 }
 
-export default forwardRef(function LoginImage(_: unknown, ref: Ref<LoginImageRef>) {
+export default function LoginImage({ value, onChange }: LoginImageProps) {
+    const [hovered, setHovered] = useState(false);
+    
     const id = useId();
-    const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
-    const [avatarText, setAvatarText] = useState<typeof AVATAR_TEXT[keyof typeof AVATAR_TEXT]>(AVATAR_TEXT.mouseOut);
-
-    useEffect(() => {
-        const avatar = new Image();
-        avatar.onload = () => setAvatarSrc(avatar.src);
-        avatar.src = `https://robohash.org/${uuidService.id()}`;
-    }, []);
-
-    useImperativeHandle(ref, () => ({ src: avatarSrc }), [avatarSrc]);
-
-    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (!e.target.files?.length) return;
-
-        const reader = new FileReader();
-        reader.onload = () => setAvatarSrc(reader.result?.toString() || '');
-        reader.readAsDataURL(e.target.files[0]);
-    };
 
     return <div className='login-image'>
         <label
-            style={{ backgroundImage: `var(--bg-top-layer), url(${avatarSrc || img})` }}
+            style={{ backgroundImage: `var(--bg-top-layer), url(${value || img})` }}
             className='login-image__label'
             htmlFor={id}
-            onMouseOver={() => setAvatarText(AVATAR_TEXT.mouseOver)}
-            onMouseOut={() => setAvatarText(AVATAR_TEXT.mouseOut)}
+            onMouseOver={() => setHovered(true)}
+            onMouseOut={() => setHovered(false)}
         >
             <span className='login-image__description'>
                 <svg viewBox="0 0 100 100">
                     <path id="curve-desc" d="M 0,0 m 0,50 a 50,50 0 1,0 50,-50" fill='transparent'/>
                     <text>
                         <textPath xlinkHref="#curve-desc" fill='currentColor'>
-                            {avatarText}
+                            {hovered ? 'Upload!' : 'This is your avatar'}
                         </textPath>
                     </text>
                 </svg>
@@ -58,7 +37,7 @@ export default forwardRef(function LoginImage(_: unknown, ref: Ref<LoginImageRef
             hidden
             type="file"
             accept='image/*'
-            onChange={onChange}
+            onChange={(e) => e.target.files && onChange(URL.createObjectURL(e.target.files[0]))}
         />
     </div>;
-});
+}

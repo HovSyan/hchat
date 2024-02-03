@@ -1,6 +1,7 @@
 @import "../../assets/styles/variables";
 
 .login-nickname-input {
+    position: relative;
     border-bottom: 1px double rgba($color-netrual-lighter, .4);
     padding-bottom: 2px;
     padding-inline: 2px;
@@ -15,7 +16,7 @@
         border-bottom-color: $color-netrual-lighter;
     }
 
-    &:not(:focus):empty:after {
+    &:not(:focus):empty:before {
         pointer-events: none;
         content: 'Your nickname';
         opacity: .4;

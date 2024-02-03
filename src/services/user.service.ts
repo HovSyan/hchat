@@ -13,7 +13,7 @@ const MOCK_USERS: IUser[] = [
 class UserService {
     private _currentUser: IUser | undefined;
 
-    private _validateNicknameUrl = API_CONFIG.url + '/user/validateNickname';
+    private _validateNicknameUrl = API_CONFIG.url + '/user/nicknameExists';
     
     set currentUser(u: IUser | undefined) {
         this._currentUser = u;
@@ -21,18 +21,18 @@ class UserService {
     }
 
     get currentUser(): IUser | undefined {
-        return this._currentUser;
+        return this._currentUser;   
     }
 
-    getUser(id: IUser['id']): Promise<IUser | undefined> {
+    getUser(id: IUser['id']): Promise<IUser | undefined> {  
         return Promise.resolve(MOCK_USERS.find((u) => u.id === id));
     }
 
-    validateNickname(nickname: string): Promise<boolean> {
-        return axios.get(this._validateNicknameUrl, { params: { nickname }}).then((res) => res.data);
+    nicknameExists(nickname: string): Promise<boolean> {
+        return axios.get(this._validateNicknameUrl, { params: { nickname }}).then((res) => !!res.data);
     }
 
-    newUser(user: Omit<IUser, 'id'>): Promise<IUser> {
+    newUser(nickname: string, profile_img: File | null): Promise<IUser> {
         return Promise.resolve(MOCK_USERS[0]);
     }
 }
