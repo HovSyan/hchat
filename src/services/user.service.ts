@@ -3,21 +3,15 @@ import { LOCAL_STORAGE_KEYS } from '../configs/localStorage.config';
 import { IUser } from '../models/user.model';
 import { API_CONFIG } from '../configs/api.config';
 
-const MOCK_USERS: IUser[] = [
-    { id: 1, nickname: 'Dexter' },
-    { id: 2, nickname: 'Brao' },
-    { id: 3, nickname: 'Gas' },
-    { id: 4, nickname: 'Reznov' },
-];
-
 class UserService {
     private _currentUser: IUser | undefined;
 
     private _validateNicknameUrl = API_CONFIG.url + '/user/nicknameExists';
+    private _userUrl = API_CONFIG.url + '/user';
     
     set currentUser(u: IUser | undefined) {
         this._currentUser = u;
-        u && localStorage.setItem(LOCAL_STORAGE_KEYS.user, u.toString());
+        u && localStorage.setItem(LOCAL_STORAGE_KEYS.user, u.id.toString());
     }
 
     get currentUser(): IUser | undefined {
@@ -25,15 +19,18 @@ class UserService {
     }
 
     getUser(id: IUser['id']): Promise<IUser | undefined> {  
-        return Promise.resolve(MOCK_USERS.find((u) => u.id === id));
+        return axios.get(this._userUrl, { params: { id }}).then((res) => res.data);
     }
 
     nicknameExists(nickname: string): Promise<boolean> {
         return axios.get(this._validateNicknameUrl, { params: { nickname }}).then((res) => !!res.data);
     }
 
-    newUser(nickname: string, profile_img: File | null): Promise<IUser> {
-        return Promise.resolve(MOCK_USERS[0]);
+    newUser(nickname: string, avatar: File | null): Promise<IUser> {
+        const formData = new FormData();
+        formData.append('nickname', nickname);
+        avatar && formData.append('avatar', avatar);
+        return axios.post(this._userUrl, formData).then((res) => res.data);
     }
 }
 

@@ -3,7 +3,7 @@ import RoomsPanel from '../rooms-panel/RoomsPanel';
 import ChatPanel from '../chat-panel/ChatPanel';
 import UserPanel from '../user-panel/UserPanel';
 import RoomContext, { ISelectedRoomContext } from '../../contexts/SelectedRoomContext';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IRoom } from '../../models/room.model';
 import ResizableGrid from '../../modules/resizable-grid/resizable-grid/ResizableGrid';
 import ResizableGridColumn from '../../modules/resizable-grid/resizable-grid-column/ResizableGridColumn';

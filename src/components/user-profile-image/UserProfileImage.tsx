@@ -12,11 +12,11 @@ export default function UserProfileImage({ userId }: UserProfileImageProps) {
     const getUserFn = useCallback(() => userService.getUser(userId), [userId]);
     const [user] = useFetch(getUserFn);
 
-    if (user && !user.profile_img) {
+    if (user && !user.avatar) {
         return <span>{user.nickname.slice(0, 1)}</span>;
     }
 
-    const src = user?.profile_img ? user.profile_img : blankProfileImage;
+    const src = user?.avatar ? user.avatar : blankProfileImage;
     const alt = user ? user.nickname : 'Profile image';
     return <img src={src} alt={alt} />;
 }
