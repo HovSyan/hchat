@@ -1,42 +1,34 @@
-import { useContext, useEffect } from 'react';
-import { useFetch } from '../../hooks/use-fetch.hook';
 import { IRoom } from '../../models/room.model';
 import roomService from '../../services/room.service';
 import Room from '../room/Room';
-import SelectedRoomContext from '../../contexts/SelectedRoomContext';
 import Error from '../error/Error';
 
 import './RoomsPanel.scss';
+import useSelectedRoom from '../../hooks/use-selected-room.hook';
+import Fetch from '../fetch/Fetch';
+import { useState } from 'react';
 
 export default function RoomsPanel() {
-    const { room: seletedRoom, setRoom: setSelectedRoom } = useContext(SelectedRoomContext);
-    const [rooms, pending, error] = useFetch<IRoom[]>(roomService.getRooms);
+    const [rooms, setRooms] = useState<IRoom[]>([]);
+    const [selectedRoom, setSelectedRoom] = useSelectedRoom(rooms);
 
-    useEffect(() => {
-        if(seletedRoom == undefined && rooms?.length) {
-            setSelectedRoom(rooms[0].id);       
-        }
-    }, [seletedRoom, rooms]);
-
-    let panelData: JSX.Element;
-    if (error) {
-        panelData = <Error />;
-    } else if (pending) {
-        panelData = <h1>Pending</h1>;
-    } else {
-        panelData = <>
+    return <aside className="rooms-panel">
+        <Fetch 
+            fetchFn={roomService.getRooms}
+            onError={<Error />}
+            onLoading={<h1>Pending</h1>} 
+            onSuccess={setRooms}
+        >
             {rooms.map((room) => (
                 <Room
                     room={room}
-                    selected={seletedRoom === room.id}
+                    selected={selectedRoom === room.id}
                     onClick={() => setSelectedRoom(room.id)}
                     key={room.id}
                 />))}
             <button className="rooms-panel__add-new">
                 <span>+</span> New Room
             </button>
-        </>;
-    }
-
-    return <aside className="rooms-panel">{panelData}</aside>;
+        </Fetch>
+    </aside>;
 }

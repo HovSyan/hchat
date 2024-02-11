@@ -7,7 +7,7 @@ export type LoginNicknameInputProps = {
 export default function LoginNicknameInput({ onChange }: LoginNicknameInputProps) {
     return <>
         <p
-            onInput={(e) => onChange((e.target as HTMLParagraphElement).textContent || '')}
+            onInput={(e) => onChange(e.currentTarget.textContent || '')}
             contentEditable="true" 
             className="login-nickname-input"
         ></p>

@@ -30,7 +30,7 @@ export default function ChatInput({ onMessageSubmit }: ChatInputProps) {
 
     return <>
         <form className='chat-input' onSubmit={onSubmit}>
-            <p contentEditable={true}
+            <p contentEditable="true"
                 onKeyDown={onInputChange}
                 ref={inputRef}
                 className="chat-input__input"

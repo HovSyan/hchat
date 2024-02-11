@@ -1,5 +1,5 @@
-import { useId, useMemo, useState } from 'react';
-import img from '../../assets/images/blank-profile-picture.webp';
+import { useEffect, useId, useState } from 'react';
+import defaultImage from '../../assets/images/blank-profile-picture.webp';
 
 import './LoginImage.scss';
 
@@ -10,12 +10,20 @@ export type LoginImageProps = {
 
 export default function LoginImage({ value, onChange }: LoginImageProps) {
     const [hovered, setHovered] = useState(false);
+    const [image, setImage] = useState<string>(defaultImage);
+    
+    useEffect(() => {
+        const img = new Image();
+        img.onload = () => setImage(value);
+        img.onerror = () => onChange(defaultImage);
+        img.src = value;
+    }, [value]);
     
     const id = useId();
 
     return <div className='login-image'>
         <label
-            style={{ backgroundImage: `var(--bg-top-layer), url(${value || img})` }}
+            style={{ backgroundImage: `var(--bg-top-layer), url(${image})` }}
             className='login-image__label'
             htmlFor={id}
             onMouseOver={() => setHovered(true)}

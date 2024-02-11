@@ -18,20 +18,20 @@ class UserService {
         return this._currentUser;   
     }
 
-    getUser(id: IUser['id']): Promise<IUser | undefined> {  
+    getUser = (id: IUser['id']): Promise<IUser | undefined> => {  
         return axios.get(this._userUrl, { params: { id }}).then((res) => res.data);
-    }
+    };
 
-    nicknameExists(nickname: string): Promise<boolean> {
+    nicknameExists = (nickname: string): Promise<boolean> => {
         return axios.get(this._validateNicknameUrl, { params: { nickname }}).then((res) => !!res.data);
-    }
+    };
 
-    newUser(nickname: string, avatar: File | null): Promise<IUser> {
+    newUser = (nickname: string, avatar: File | null): Promise<IUser> => {
         const formData = new FormData();
         formData.append('nickname', nickname);
         avatar && formData.append('avatar', avatar);
         return axios.post(this._userUrl, formData).then((res) => res.data);
-    }
+    };
 }
 
 export default new UserService();
