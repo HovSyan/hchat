@@ -2,7 +2,7 @@ import MenuPanel from '../menu-panel/MenuPanel';
 import RoomsPanel from '../rooms-panel/RoomsPanel';
 import ChatPanel from '../chat-panel/ChatPanel';
 import UserPanel from '../user-panel/UserPanel';
-import RoomContext, { ISelectedRoomContext } from '../../contexts/SelectedRoomContext';
+import ApplicationContext, { IApplicationContext, ISelectedRoomContext } from '../../contexts/app-context';
 import { useState } from 'react';
 import { IRoom } from '../../models/room.model';
 import ResizableGrid from '../../modules/resizable-grid/resizable-grid/ResizableGrid';
@@ -11,6 +11,8 @@ import ResizableGridColumn from '../../modules/resizable-grid/resizable-grid-col
 import './Main.scss';
 import roomService from '../../services/room.service';
 import useSyncWithService from '../../hooks/use-sync-with-service.hook';
+import { IUser } from '../../models/user.model';
+import userService from '../../services/user.service';
 
 const RESIZABLE_COLUMN = {
     min: 200,
@@ -22,15 +24,11 @@ const resizeColumnMinMax = (width: number) => {
 };
 
 export default function Main() {
-    const [selectedRoom, setSelectedRoom] = useState<IRoom['id']>();
+    const [selectedRoom, setSelectedRoom] = useState<IRoom>();
+    const [selectedUser, setSelectedUser] = useState<IUser>(userService.currentUser!);
     const [resizableColumnsWidths, setResizableColumnWidths] = useState<[number, number]>([30, 30]);
 
-    useSyncWithService(roomService, 'selectedRoom', selectedRoom);
-
-    const selectedRoomContext: ISelectedRoomContext = {
-        room: selectedRoom,
-        setRoom: setSelectedRoom,
-    };
+    useSyncWithService(roomService, 'selectedRoom', selectedRoom?.id);
 
     const onResize = (index: number, initialWidth: number, delta: number) => {
         resizableColumnsWidths[index] = resizeColumnMinMax(initialWidth + delta);
@@ -39,7 +37,7 @@ export default function Main() {
 
     return (
         <main className="main">
-            <RoomContext.Provider value={selectedRoomContext}>
+            <ApplicationContext.Provider value={{ selectedRoom, setSelectedRoom, selectedUser, setSelectedUser }}>
                 <ResizableGrid onResize={onResize}>
                     <ResizableGridColumn width='5.5rem'>
                         <MenuPanel />
@@ -54,7 +52,7 @@ export default function Main() {
                         <UserPanel />
                     </ResizableGridColumn>
                 </ResizableGrid>
-            </RoomContext.Provider>
+            </ApplicationContext.Provider>
         </main>
     );
 }

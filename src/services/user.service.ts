@@ -2,12 +2,15 @@ import axios from 'axios';
 import { LOCAL_STORAGE_KEYS } from '../configs/localStorage.config';
 import { IUser } from '../models/user.model';
 import { API_CONFIG } from '../configs/api.config';
+import blankProfileImage from '../assets/images/blank-profile-picture.webp';
 
 class UserService {
     private _currentUser: IUser | undefined;
+    private _cache = new Map<IUser['id'], IUser>();
 
     private _validateNicknameUrl = API_CONFIG.url + '/user/nicknameExists';
     private _userUrl = API_CONFIG.url + '/user';
+    private _avatarUrl = API_CONFIG.url + '/user/avatar';
     
     set currentUser(u: IUser | undefined) {
         this._currentUser = u;
@@ -19,8 +22,20 @@ class UserService {
     }
 
     getUser = (id: IUser['id']): Promise<IUser | undefined> => {  
-        return axios.get(this._userUrl, { params: { id }}).then((res) => res.data);
+        if (this._cache.get(id)) {
+            return Promise.resolve(this._cache.get(id));
+        }
+        return axios.get(this._userUrl, { params: { id }})
+            .then((res) => {
+                this._cache.set(id, res.data);
+                return res.data;
+            });
     };
+
+    getAvatarUrl(avatar: IUser['avatar']): string {
+        if (!avatar) return blankProfileImage;
+        return `${this._avatarUrl}/${avatar}`;
+    }
 
     nicknameExists = (nickname: string): Promise<boolean> => {
         return axios.get(this._validateNicknameUrl, { params: { nickname }}).then((res) => !!res.data);

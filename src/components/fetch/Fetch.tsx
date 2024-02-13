@@ -2,13 +2,15 @@ import { ReactElement, ReactNode, useEffect, useState } from 'react';
 
 export type FetchProps<T> = {
     fetchFn: () => Promise<T>
-    onLoading?: ReactElement,
-    onError?: ReactElement,
+    loadingElement?: ReactElement,
+    errorElement?: ReactElement,
+    onLoading?: () => unknown,
+    onError?: (error: unknown) => unknown,
     onSuccess?: (data: T) => unknown,
     children: ReactNode
 }
 
-export default function Fetch<T>({ fetchFn, onLoading, onError, onSuccess, children }: FetchProps<T>) {
+export default function Fetch<T>({ fetchFn, onLoading, onError, onSuccess, errorElement, loadingElement, children }: FetchProps<T>) {
     const setData = useState<T | null>(null)[1];
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
@@ -23,17 +25,18 @@ export default function Fetch<T>({ fetchFn, onLoading, onError, onSuccess, child
             })
             .catch((e) => {
                 setError(e);
-                throw e;
             })
             .finally(() => setLoading(false));
     }, [fetchFn, onSuccess]);
     
     if (error) {
-        return onError || <></>;
+        onError?.(error);
+        return errorElement || <></>;
     }
 
     if (loading) {
-        return onLoading || <></>;
+        onLoading?.();
+        return loadingElement || <></>;
     }
 
     return <>{children}</>;

@@ -5,11 +5,12 @@ import Notification from '../notification/Notification';
 
 import './Login.scss';
 import userService from '../../services/user.service';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import uuidService from '../../services/uuid.service';
 import avatarService from '../../services/avatar.service';
 import { useNavigate } from 'react-router-dom';
 import { LOCAL_STORAGE_KEYS } from '../../configs/localStorage.config';
+import localStorageService from '../../services/local-storage.service';
 
 type LoginForm = {
     nickname: string,
@@ -28,6 +29,12 @@ export default function Login() {
         },
         mode: 'all'
     });
+
+    useEffect(() => {
+        if (localStorageService.getUserId()) {
+            navigate('/');
+        }
+    }, []);
     
     const onSubmit: SubmitHandler<LoginForm> = async ({ nickname, profile_img }) => { 
         const file = await avatarService.fileFromSrc(profile_img);

@@ -1,15 +1,15 @@
 import { useContext, useEffect } from 'react';
 import { IRoom } from '../models/room.model';
-import SelectedRoomContext from '../contexts/SelectedRoomContext';
+import SelectedRoomContext from '../contexts/app-context';
 
 export default function useSelectedRoom(rooms: IRoom[] | null) {
-    const { room, setRoom } = useContext(SelectedRoomContext);
+    const { selectedRoom, setSelectedRoom } = useContext(SelectedRoomContext);
 
     useEffect(() => {
-        if(room == undefined && rooms?.length) {
-            setRoom(rooms[0].id);       
+        if(selectedRoom == undefined && rooms?.length) {
+            setSelectedRoom(rooms[0]);       
         }
-    }, [room, rooms]);
+    }, [selectedRoom, rooms]);
 
-    return [room, setRoom] as const;
+    return [selectedRoom, setSelectedRoom] as const;
 }

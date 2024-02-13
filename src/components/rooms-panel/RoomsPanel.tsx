@@ -15,15 +15,15 @@ export default function RoomsPanel() {
     return <aside className="rooms-panel">
         <Fetch 
             fetchFn={roomService.getRooms}
-            onError={<Error />}
-            onLoading={<h1>Pending</h1>} 
+            errorElement={<Error />}
+            loadingElement={<h1>Pending</h1>} 
             onSuccess={setRooms}
         >
             {rooms.map((room) => (
                 <Room
                     room={room}
-                    selected={selectedRoom === room.id}
-                    onClick={() => setSelectedRoom(room.id)}
+                    selected={selectedRoom?.id === room.id}
+                    onClick={() => setSelectedRoom(room)}
                     key={room.id}
                 />))}
             <button className="rooms-panel__add-new">

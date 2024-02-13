@@ -1,14 +1,14 @@
 import { useContext } from 'react';
 import Chat from '../chat/Chat';
-import SelectedRoomContext from '../../contexts/SelectedRoomContext';
+import SelectedRoomContext from '../../contexts/app-context';
 
 import './ChatPanel.scss';
 
 export default function ChatPanel() {
-    const { room } = useContext(SelectedRoomContext);
+    const { selectedRoom } = useContext(SelectedRoomContext);
     return (
         <section className="chat-panel">
-            <Chat roomId={room} />
+            <Chat roomId={selectedRoom?.id} />
         </section>
     );
 }
