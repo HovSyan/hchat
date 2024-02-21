@@ -4,16 +4,20 @@ import { IUser } from '../../models/user.model';
 import userService from '../../services/user.service';
 import UserProfileImage from '../user-profile-image/UserProfileImage';
 
+import './UserPanel.scss';
+
 export type UserPanelProps = {
     selectedUser: IUser;
 }
 
 function UserPanel() {
     const { selectedUser } = useContext(ApplicationContext);
-    return <aside className="user-info">
-        <UserProfileImage userId={selectedUser.id} />
-        <span className='user-info__nickname'>{selectedUser.nickname}</span>
-        {selectedUser.id === userService.currentUser?.id && <span className='user-info__me'>This is you</span>}
+    return <aside className="user-panel">
+        <div className='user-panel__img'>
+            <UserProfileImage userId={selectedUser.id}/>
+        </div>
+        <span className='user-panel__nickname'>{selectedUser.nickname}</span>
+        {selectedUser.id === userService.currentUser?.id && <span className='user-panel__me'>This is you</span>}
     </aside>;
 }
 

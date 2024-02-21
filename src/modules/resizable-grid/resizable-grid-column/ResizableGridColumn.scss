@@ -9,8 +9,9 @@
     }
 
     &__separator {
+        flex: 0 0 11px;
+
         margin: 2rem 0;
-        width: 11px;
         border-radius: 50%;
 
         position: relative;
