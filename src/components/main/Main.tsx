@@ -2,7 +2,7 @@ import MenuPanel from '../menu-panel/MenuPanel';
 import RoomsPanel from '../rooms-panel/RoomsPanel';
 import ChatPanel from '../chat-panel/ChatPanel';
 import UserPanel from '../user-panel/UserPanel';
-import ApplicationContext, { IApplicationContext, ISelectedRoomContext } from '../../contexts/app-context';
+import ApplicationContext from '../../contexts/app-context';
 import { useState } from 'react';
 import { IRoom } from '../../models/room.model';
 import ResizableGrid from '../../modules/resizable-grid/resizable-grid/ResizableGrid';

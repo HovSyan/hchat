@@ -17,7 +17,7 @@ function UserPanel() {
             <UserProfileImage userId={selectedUser.id}/>
         </div>
         <span className='user-panel__nickname'>{selectedUser.nickname}</span>
-        {selectedUser.id === userService.currentUser?.id && <span className='user-panel__me'>This is you</span>}
+        {selectedUser.id === userService.currentUser?.id && <span className='user-panel__me'><i>(This is you)</i></span>}
     </aside>;
 }
 

@@ -1,11 +1,14 @@
 @import '../../assets/styles/variables';
 
 .user-panel {
-    padding: 2rem;
-    
+    padding: 2rem 1rem;
+    display: grid;
+    justify-content: center;
+    text-align: center;
+
     &__img {
+        max-width: 25rem;
         position: relative;
-        width: 100%;
         aspect-ratio: 1;
         border-radius: 100%;
         border: 2px solid $color-accent-light;
@@ -19,14 +22,18 @@
         }
 
         &::after {
+            --shine-color: rgba(255, 255, 255, .8);
+            --bg-position-offset: 50rem;
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(45deg, yellow 20%, transparent 20%);
-            background-position: 0 100%;
+            background: linear-gradient(45deg, transparent 45%, var(--shine-color) 45%, var(--shine-color) 55%, transparent 55%);
+            filter: blur(1rem);
+            background-position: calc(-1 * var(--bg-position-offset)) calc(100% + var(--bg-position-offset));
+            background-size: 100% 100%;
             background-repeat: no-repeat;
             z-index: 1;
-            transition: background-position .2s;
+            transition: none;
         }
 
         &:hover > img {
@@ -34,7 +41,22 @@
         }
 
         &:hover::after {
-            background-position: 120% -20%;
+            transition: background-position 1.3s;
+            background-position: calc(100% + #{var(--bg-position-offset)}) calc(-1 * var(--bg-position-offset));
         }
+    }
+
+    &__nickname {
+        font-size: 2.2rem;
+        font-weight: 600;
+        color: $color-accent-light;
+        letter-spacing: 1.3px;
+        margin-top: 2rem;
+        margin-bottom: .5rem;
+    }
+
+    &__me {
+        font-size: 1.2rem;
+        pointer-events: none;
     }
 }
