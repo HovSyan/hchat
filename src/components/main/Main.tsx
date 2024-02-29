@@ -3,7 +3,7 @@ import RoomsPanel from '../rooms-panel/RoomsPanel';
 import ChatPanel from '../chat-panel/ChatPanel';
 import UserPanel from '../user-panel/UserPanel';
 import ApplicationContext from '../../contexts/app-context';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IRoom } from '../../models/room.model';
 import ResizableGrid from '../../modules/resizable-grid/resizable-grid/ResizableGrid';
 import ResizableGridColumn from '../../modules/resizable-grid/resizable-grid-column/ResizableGridColumn';
@@ -13,6 +13,7 @@ import roomService from '../../services/room.service';
 import useSyncWithService from '../../hooks/use-sync-with-service.hook';
 import { IUser } from '../../models/user.model';
 import userService from '../../services/user.service';
+import messagesSocketService from '../../services/messages-socket.service';
 
 const RESIZABLE_COLUMN = {
     min: 200,
@@ -27,6 +28,10 @@ export default function Main() {
     const [selectedRoom, setSelectedRoom] = useState<IRoom>();
     const [selectedUser, setSelectedUser] = useState<IUser>(userService.currentUser!);
     const [resizableColumnsWidths, setResizableColumnWidths] = useState<[number, number]>([30, 30]);
+
+    useEffect(() => {
+        messagesSocketService.connect();
+    }, []);
 
     useSyncWithService(roomService, 'selectedRoom', selectedRoom?.id);
 

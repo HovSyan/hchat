@@ -28,14 +28,20 @@ export default function Fetch<T>({ fetchFn, onLoading, onError, onSuccess, error
             })
             .finally(() => setLoading(false));
     }, [fetchFn, onSuccess]);
+
+    useEffect(() => {
+        if (error) {
+            onError?.(error);
+        } else if (loading) {
+            onLoading?.();
+        }
+    }, [error, loading]);
     
     if (error) {
-        onError?.(error);
         return errorElement || <></>;
     }
 
     if (loading) {
-        onLoading?.();
         return loadingElement || <></>;
     }
 

@@ -3,6 +3,8 @@ import userService from '../../services/user.service';
 import { useCallback, useState } from 'react';
 import Fetch from '../fetch/Fetch';
 
+import './UserProfileImage.scss';
+
 export type UserProfileImageProps = {
     userId: IUser['id'];
 };
@@ -21,6 +23,6 @@ export default function UserProfileImage({ userId }: UserProfileImageProps) {
         fetchFn={getUserFn}
         onSuccess={setUser}
     >
-        <img src={src} alt={alt} />
+        <img className='user-profile-image' src={src} alt={alt} />
     </Fetch>;
 }

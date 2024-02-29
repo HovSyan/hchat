@@ -40,8 +40,6 @@ function loader(args: LoaderFunctionArgs) {
     return networkHealthcheckService.ping().then(result => {
         const isErrorPage = args.request.url.endsWith('/error');
 
-        console.log(result, args.request.url);
-
         if (result && isErrorPage) {
             return redirect('/');
         }

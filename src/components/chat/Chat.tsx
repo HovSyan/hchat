@@ -5,10 +5,13 @@ import ChatInput from '../chat-input/ChatInput';
 
 import './Chat.scss';
 import useMessages from '../../hooks/use-messages.hook';
+import messagesSocketService from '../../services/messages-socket.service';
 
 export type ChatProps = {
     roomId: IRoom['id'] | undefined;
 };
+
+// messagesSocketService.connect();
 
 export default function Chat({ roomId }: ChatProps) {
     const messages = useMessages(roomId);
@@ -19,7 +22,7 @@ export default function Chat({ roomId }: ChatProps) {
     const onMessageSubmit = (msg: string) => {
         if(!roomId) return;
 
-        messagesService.sendMessage(roomId, msg);
+        messagesService.sendMessage(msg);
     };
 
     return !roomId 
