@@ -1,7 +1,7 @@
 @import 'src/assets/styles/variables';
 
 .message {
-    justify-self: end;
+    justify-self: start;
 
     background: linear-gradient(45deg, $color-accent, $color-accent-light);
     color: $color-primary-dark;
@@ -10,7 +10,6 @@
     display: flex;
     align-items: flex-start;
     gap: .5rem;
-    flex-direction: row-reverse;
     
     &__sender {
         border-radius: 100%;
@@ -21,26 +20,31 @@
         aspect-ratio: 1;
         flex-shrink: 0;
 
-        transform: translate(.5rem, -.5rem);
+        transform: translate(-.5rem, -.5rem);
+
+        cursor: pointer;
     }
     
     &__text {
         padding: .7rem;
-        padding-right: 0;
+        padding-left: 0;
+        margin-left: -.3rem;
         font-size: 1.3rem;
     }
 
     &--me {
-        justify-self: start;
-        flex-direction: row;
+        justify-self: end;
+        flex-direction: row-reverse;
         
         .message__sender {
-            transform: translate(-.5rem, -.5rem);
+            transform: translate(.5rem, -.5rem);
         }
 
         .message__text {
-            padding-left: 0;
-            padding-right: .7rem;
+            padding-right: 0;
+            margin-left: 0;
+            padding-left: .7rem;
+            margin-right: -.3rem;
         }
     }
 }

@@ -5,13 +5,10 @@ import ChatInput from '../chat-input/ChatInput';
 
 import './Chat.scss';
 import useMessages from '../../hooks/use-messages.hook';
-import messagesSocketService from '../../services/messages-socket.service';
 
 export type ChatProps = {
     roomId: IRoom['id'] | undefined;
 };
-
-// messagesSocketService.connect();
 
 export default function Chat({ roomId }: ChatProps) {
     const messages = useMessages(roomId);
@@ -28,9 +25,9 @@ export default function Chat({ roomId }: ChatProps) {
     return !roomId 
         ? <h1 className='chat__no-messages'>Hey champion! Select a room to view the chat!</h1> 
         : (
-            <>
+            <div className='chat'>
                 <div className='chat__messages'>{messageComponents}</div>
                 <ChatInput onMessageSubmit={onMessageSubmit}/>
-            </>
+            </div>
         );
 }

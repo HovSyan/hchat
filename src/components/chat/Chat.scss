@@ -1,6 +1,11 @@
 @import "src/assets/styles/variables";
 
 .chat {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    height: 100%;
+
     &__messages {
         display: grid;
         gap: 1rem;
@@ -8,6 +13,9 @@
         grid-auto-rows: max-content;
         align-items: baseline;
         justify-items: baseline;
+
+        overflow: auto;
+        padding: 1rem;
     }
 
     &__no-messages {

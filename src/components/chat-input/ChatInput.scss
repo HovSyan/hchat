@@ -4,10 +4,9 @@
 .chat-input {
     --focus-color: #{$color-accent-light};
 
-    position: absolute;
-    inset: auto 0 2rem;
     margin: auto;
-    
+    position: relative;
+
     width: 100%;
     max-width: 50rem;
     min-height: 3.5rem;

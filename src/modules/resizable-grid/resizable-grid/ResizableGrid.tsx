@@ -4,7 +4,7 @@ import './ResizableGrid.scss';
 import ResizableGridContext from '../ResizableGridContext';
 import { Separator } from '../resizable-grid-column/ResizableGridColumn';
 
-type ResizingEvent = { 
+type ResizingEvent = {
     event: MouseEvent, 
     initialWidth: number, 
     index: number, 
@@ -34,6 +34,7 @@ export default function ResizableGrid({ children, onResize }: ResizableGridProps
     }, []);
    
     const gridTemplateColumns = children?.map((c) => c.props.width || '1fr').join(' ');
+    const gridTemplateRows = '100%';
     const className = `resizable-grid ${isResizing ? 'resizable-grid--resizing' : ''}`;
     
     const onMouseUp = () => {
@@ -48,7 +49,7 @@ export default function ResizableGrid({ children, onResize }: ResizableGridProps
 
     return <ResizableGridContext.Provider value={{ onResizeStart }}>
         <div
-            style={{ gridTemplateColumns }}
+            style={{ gridTemplateColumns, gridTemplateRows }}
             className={className}
             onMouseUp={onMouseUp}
             onMouseMove={onMouseMove}
